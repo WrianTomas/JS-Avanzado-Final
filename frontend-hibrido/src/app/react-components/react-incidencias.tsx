@@ -127,7 +127,7 @@ export const ReactIncidencias = () => {
                 onClick={() => eliminarIncidencia(inc.id)}
                 style={{ flex: 1, padding: '8px', backgroundColor: 'transparent', color: '#ef4444', border: '1px solid #ef4444', borderRadius: '6px', cursor: 'pointer', fontWeight: 'bold', fontSize: '0.85rem' }}
               >
-                🗑️ Eliminar
+                🗑️ Eliminar 
               </button>
             </div>
           </div>
