@@ -11,3 +11,14 @@ En una segunda terminal, ingresar a la carpeta del frontend y compilar:
 `npm install`
 `npm start`
 *(El proxy redirigirá las peticiones de React hacia el backend automáticamente).*
+
+**3. Levantar la Interfaz (Next.js)**
+En una tercera terminal, ingresar a la carpeta del frontend y compilar:
+`cd portal-cuidadano`
+`npm install`
+`npm install jspdf`
+`npm run dev`
+
+**Etapa 7**
+Abre la terminal donde corre tu backend (la que ejecutaba npm run start:backend), presiona Ctrl + C para detenerlo, y ejecuta este comando para instalar las herramientas de tokens y sus tipos:
+`npm install jsonwebtoken && npm install -D @types/jsonwebtoken`

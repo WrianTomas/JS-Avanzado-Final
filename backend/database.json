@@ -12,5 +12,13 @@
     "ubicacion": "Parque Central",
     "estado": "Resuelto",
     "fechaCreacion": "2026-07-14T05:05:32.984Z"
+  },
+  {
+    "id": 3,
+    "fechaCreacion": "2026-07-14T05:11:30.331Z",
+    "tipo": "Semáforo Averiado",
+    "ubicacion": "Av. Sol, 237",
+    "descripcion": "No hay luces para poder cruzar la pista",
+    "estado": "Pendiente"
   }
 ]
