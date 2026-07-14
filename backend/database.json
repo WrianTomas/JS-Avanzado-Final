@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "tipo": "Bache en vía",
+    "ubicacion": "Av. Estrella, Santa Clara",
+    "estado": "Pendiente",
+    "fechaCreacion": "2026-07-14T05:05:32.984Z"
+  },
+  {
+    "id": 2,
+    "tipo": "Acumulación de Basura",
+    "ubicacion": "Parque Central",
+    "estado": "Resuelto",
+    "fechaCreacion": "2026-07-14T05:05:32.984Z"
+  }
+]
