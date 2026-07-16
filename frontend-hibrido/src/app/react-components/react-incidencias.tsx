@@ -14,7 +14,8 @@ export const ReactIncidencias = () => {
   }, [token]);
 
   const cargarDatos = () => {
-    fetch('/api/incidencias')
+    // ✅ URL ACTUALIZADA
+    fetch('https://js-avanzado-final.onrender.com/api/incidencias')
       .then(res => res.json())
       .then(data => setIncidencias(data.sort((a: any, b: any) => b.id - a.id)));
   };
@@ -22,7 +23,8 @@ export const ReactIncidencias = () => {
   // Lógica de Login
   const iniciarSesion = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res = await fetch('/api/login', {
+    // ✅ URL ACTUALIZADA
+    const res = await fetch('https://js-avanzado-final.onrender.com/api/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password })
@@ -44,7 +46,8 @@ export const ReactIncidencias = () => {
 
   // Peticiones Protegidas enviando el JWT
   const marcarResuelto = async (id: number) => {
-    await fetch(`/api/incidencias/${id}`, {
+    // ✅ URL ACTUALIZADA
+    await fetch(`https://js-avanzado-final.onrender.com/api/incidencias/${id}`, {
       method: 'PUT',
       headers: { 
         'Content-Type': 'application/json',
@@ -57,7 +60,8 @@ export const ReactIncidencias = () => {
 
   const eliminarIncidencia = async (id: number) => {
     if (!confirm('¿Estás seguro de eliminar este registro del sistema?')) return;
-    await fetch(`/api/incidencias/${id}`, {
+    // ✅ URL ACTUALIZADA
+    await fetch(`https://js-avanzado-final.onrender.com/api/incidencias/${id}`, {
       method: 'DELETE',
       headers: { 'Authorization': `Bearer ${token}` }
     });

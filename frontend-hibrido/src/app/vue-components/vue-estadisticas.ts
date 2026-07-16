@@ -28,9 +28,10 @@ export const VueEstadisticas = {
     // Función para comunicarse con tu backend en Node
     const cargarMeticas = async () => {
       try {
-        const res = await fetch('/api/incidencias');
+        // ✅ URL ACTUALIZADA
+        const res = await fetch('https://js-avanzado-final.onrender.com/api/incidencias');
         const data = await res.json();
-        
+
         total.value = data.length;
         resueltos.value = data.filter((inc: any) => inc.estado === 'Resuelto').length;
       } catch (error) {
