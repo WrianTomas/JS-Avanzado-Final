@@ -5,7 +5,7 @@ import { jsPDF } from 'jspdf'; // <-- IMPORTAMOS LA LIBRERÍA
 // --- SSR: CARGA INICIAL DESDE EL SERVIDOR ---
 export async function getServerSideProps() {
   try {
-    const res = await fetch('https://js-avanzado-final.onrender.com');
+    const res = await fetch('https://js-avanzado-final.onrender.com/api/incidencias');
     const datos = await res.json();
     return { props: { datosIniciales: datos } };
   } catch (error) {
@@ -31,9 +31,9 @@ export default function PortalPublico({ datosIniciales }: { datosIniciales: any[
     let resultado = [...incidencias];
     if (busqueda.trim() !== '') {
       const q = busqueda.toLowerCase();
-      resultado = resultado.filter(inc => 
-        inc.id.toString().includes(q) || 
-        inc.tipo.toLowerCase().includes(q) || 
+      resultado = resultado.filter(inc =>
+        inc.id.toString().includes(q) ||
+        inc.tipo.toLowerCase().includes(q) ||
         inc.ubicacion.toLowerCase().includes(q)
       );
     }
@@ -45,12 +45,12 @@ export default function PortalPublico({ datosIniciales }: { datosIniciales: any[
 
   const formatearFecha = (inc: any) => {
     if (inc.fechaCreacion) {
-      return new Date(inc.fechaCreacion).toLocaleString('es-PE', { 
-        day: '2-digit', month: 'long', year: 'numeric', 
-        hour: '2-digit', minute: '2-digit' 
+      return new Date(inc.fechaCreacion).toLocaleString('es-PE', {
+        day: '2-digit', month: 'long', year: 'numeric',
+        hour: '2-digit', minute: '2-digit'
       });
     }
-    return 'Registro Inicial'; 
+    return 'Registro Inicial';
   };
 
   // --- NUEVA FUNCIÓN: GENERADOR DE PDF PROFESIONAL ---
@@ -60,7 +60,7 @@ export default function PortalPublico({ datosIniciales }: { datosIniciales: any[
     // Estilos de Cabecera
     doc.setFont("helvetica", "bold");
     doc.setFontSize(22);
-    doc.setTextColor(15, 23, 42); 
+    doc.setTextColor(15, 23, 42);
     doc.text("GeoReporte Urbano", 20, 20);
 
     doc.setFontSize(14);
@@ -82,7 +82,7 @@ export default function PortalPublico({ datosIniciales }: { datosIniciales: any[
       doc.setFont("helvetica", "bold");
       doc.text(etiqueta, 20, y);
       doc.setFont("helvetica", "normal");
-      
+
       // Controlar textos largos (como la descripción)
       const textoDividido = doc.splitTextToSize(valor || 'No especificado', 130);
       doc.text(textoDividido, 65, y);
@@ -109,18 +109,19 @@ export default function PortalPublico({ datosIniciales }: { datosIniciales: any[
     e.preventDefault();
     setEnviando(true);
     try {
-      const res = await fetch('http://localhost:3000/api/incidencias', {
+
+      const res = await fetch('https://js-avanzado-final.onrender.com/api/incidencias', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          tipo: nuevoTipo, 
-          ubicacion: nuevaUbicacion, 
+        body: JSON.stringify({
+          tipo: nuevoTipo,
+          ubicacion: nuevaUbicacion,
           descripcion: nuevaDescripcion,
-          estado: 'Pendiente' 
+          estado: 'Pendiente'
         })
       });
       const nuevaIncidencia = await res.json();
-      
+
       setIncidencias([nuevaIncidencia, ...incidencias]);
       setNuevoTipo(''); setNuevaUbicacion(''); setNuevaDescripcion('');
       alert("¡Reporte enviado con éxito! Las autoridades han sido notificadas.");
@@ -137,7 +138,7 @@ export default function PortalPublico({ datosIniciales }: { datosIniciales: any[
       <Head><title>Portal de Transparencia | GeoReporte</title></Head>
 
       <div style={{ fontFamily: 'system-ui, sans-serif', backgroundColor: '#f8fafc', minHeight: '100vh', color: '#334155' }}>
-        
+
         <header style={{ backgroundColor: '#0f172a', padding: '50px 20px', color: 'white', textAlign: 'center' }}>
           <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
             <h1 style={{ fontSize: '2.5rem', margin: '0 0 10px 0', fontWeight: '800' }}>🏙️ Portal Ciudadano Activo</h1>
@@ -148,15 +149,15 @@ export default function PortalPublico({ datosIniciales }: { datosIniciales: any[
         </header>
 
         <main style={{ maxWidth: '1200px', margin: '0 auto', padding: '30px 20px' }}>
-          
+
           <div style={{ display: 'flex', justifyContent: 'center', gap: '15px', marginBottom: '40px', marginTop: '-55px' }}>
-            <button 
+            <button
               onClick={() => setPestañaActiva('consultar')}
               style={{ padding: '15px 30px', fontSize: '1rem', fontWeight: 'bold', borderRadius: '12px', cursor: 'pointer', transition: 'all 0.3s', border: 'none', backgroundColor: pestañaActiva === 'consultar' ? '#3b82f6' : 'white', color: pestañaActiva === 'consultar' ? 'white' : '#64748b', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)' }}
             >
               🔍 Consultar Casos
             </button>
-            <button 
+            <button
               onClick={() => setPestañaActiva('reportar')}
               style={{ padding: '15px 30px', fontSize: '1rem', fontWeight: 'bold', borderRadius: '12px', cursor: 'pointer', transition: 'all 0.3s', border: 'none', backgroundColor: pestañaActiva === 'reportar' ? '#10b981' : 'white', color: pestañaActiva === 'reportar' ? 'white' : '#64748b', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)' }}
             >
@@ -166,14 +167,14 @@ export default function PortalPublico({ datosIniciales }: { datosIniciales: any[
 
           {pestañaActiva === 'consultar' && (
             <div style={{ display: 'flex', gap: '30px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
-              
+
               <aside style={{ flex: '1 1 300px', backgroundColor: 'white', padding: '24px', borderRadius: '16px', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)' }}>
                 <h3 style={{ margin: '0 0 20px 0' }}>Filtros de Búsqueda</h3>
-                <input 
+                <input
                   type="text" placeholder="Buscar por ID, Tipo o Lugar..." value={busqueda} onChange={(e) => setBusqueda(e.target.value)}
                   style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #cbd5e1', marginBottom: '15px', outline: 'none' }}
                 />
-                <select 
+                <select
                   value={filtroEstado} onChange={(e) => setFiltroEstado(e.target.value)}
                   style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none', backgroundColor: 'white' }}
                 >
@@ -185,8 +186,8 @@ export default function PortalPublico({ datosIniciales }: { datosIniciales: any[
 
               <section style={{ flex: '2 1 600px', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '20px' }}>
                 {incidenciasProcesadas.map((inc) => (
-                  <article 
-                    key={inc.id} 
+                  <article
+                    key={inc.id}
                     onClick={() => setIncidenciaSeleccionada(inc)}
                     style={{ backgroundColor: 'white', borderRadius: '12px', padding: '20px', cursor: 'pointer', transition: 'transform 0.2s', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)', borderTop: `4px solid ${inc.estado === 'Resuelto' ? '#10b981' : inc.estado === 'Pendiente' ? '#ef4444' : '#f59e0b'}` }}
                     onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-5px)'}
@@ -211,7 +212,7 @@ export default function PortalPublico({ datosIniciales }: { datosIniciales: any[
             <div style={{ maxWidth: '600px', margin: '0 auto', backgroundColor: 'white', padding: '40px', borderRadius: '16px', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}>
               <h2 style={{ fontSize: '1.8rem', margin: '0 0 10px 0', color: '#0f172a' }}>Enviar Nuevo Reporte</h2>
               <p style={{ color: '#64748b', marginBottom: '30px' }}>Ayúdanos a mejorar el distrito. Proporciona los detalles exactos del problema.</p>
-              
+
               <form onSubmit={enviarReporte} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                 <div>
                   <label style={{ fontWeight: 'bold', fontSize: '0.9rem', color: '#334155' }}>Tipo de Incidencia *</label>
@@ -224,7 +225,7 @@ export default function PortalPublico({ datosIniciales }: { datosIniciales: any[
                     <option value="Otro">Otro tipo de accidente</option>
                   </select>
                 </div>
-                
+
                 <div>
                   <label style={{ fontWeight: 'bold', fontSize: '0.9rem', color: '#334155' }}>Ubicación Exacta *</label>
                   <input required type="text" placeholder="Ej: Av. Principal cruce con Calle 2" value={nuevaUbicacion} onChange={e => setNuevaUbicacion(e.target.value)} style={{ width: '100%', padding: '12px', marginTop: '8px', borderRadius: '8px', border: '1px solid #cbd5e1' }} />
@@ -247,12 +248,12 @@ export default function PortalPublico({ datosIniciales }: { datosIniciales: any[
         {incidenciaSeleccionada && (
           <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', backgroundColor: 'rgba(15, 23, 42, 0.7)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000, padding: '20px' }}>
             <div style={{ backgroundColor: 'white', borderRadius: '16px', width: '100%', maxWidth: '500px', overflow: 'hidden', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)' }}>
-              
+
               <div style={{ backgroundColor: incidenciaSeleccionada.estado === 'Resuelto' ? '#10b981' : incidenciaSeleccionada.estado === 'Pendiente' ? '#ef4444' : '#f59e0b', padding: '20px', color: 'white', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <h3 style={{ margin: 0, fontSize: '1.5rem' }}>Detalle de Incidencia</h3>
                 <button onClick={() => setIncidenciaSeleccionada(null)} style={{ background: 'none', border: 'none', color: 'white', fontSize: '1.5rem', cursor: 'pointer', fontWeight: 'bold' }}>✕</button>
               </div>
-              
+
               <div style={{ padding: '30px' }}>
                 <div style={{ marginBottom: '20px' }}>
                   <p style={{ margin: '0 0 5px 0', fontSize: '0.85rem', color: '#64748b', fontWeight: 'bold', textTransform: 'uppercase' }}>Identificador (Ticket)</p>
@@ -278,7 +279,7 @@ export default function PortalPublico({ datosIniciales }: { datosIniciales: any[
                 </div>
 
                 {/* BOTÓN PARA GENERAR PDF */}
-                <button 
+                <button
                   onClick={() => generarPDF(incidenciaSeleccionada)}
                   style={{ width: '100%', padding: '14px', backgroundColor: '#0f172a', color: 'white', fontWeight: 'bold', fontSize: '1rem', border: 'none', borderRadius: '8px', cursor: 'pointer', transition: 'background-color 0.3s', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' }}
                 >
