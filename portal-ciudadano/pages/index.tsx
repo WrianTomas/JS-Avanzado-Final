@@ -5,7 +5,7 @@ import { jsPDF } from 'jspdf'; // <-- IMPORTAMOS LA LIBRERÍA
 // --- SSR: CARGA INICIAL DESDE EL SERVIDOR ---
 export async function getServerSideProps() {
   try {
-    const res = await fetch('http://localhost:3000/api/incidencias');
+    const res = await fetch('https://js-avanzado-final.onrender.com');
     const datos = await res.json();
     return { props: { datosIniciales: datos } };
   } catch (error) {
