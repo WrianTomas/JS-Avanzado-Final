@@ -109,19 +109,19 @@ export default function PortalPublico({ datosIniciales }: { datosIniciales: any[
     e.preventDefault();
     setEnviando(true);
     try {
-
+      // ponemos la URL de Render
       const res = await fetch('https://js-avanzado-final.onrender.com/api/incidencias', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          tipo: nuevoTipo,
-          ubicacion: nuevaUbicacion,
+        body: JSON.stringify({ 
+          tipo: nuevoTipo, 
+          ubicacion: nuevaUbicacion, 
           descripcion: nuevaDescripcion,
-          estado: 'Pendiente'
+          estado: 'Pendiente' 
         })
       });
       const nuevaIncidencia = await res.json();
-
+      
       setIncidencias([nuevaIncidencia, ...incidencias]);
       setNuevoTipo(''); setNuevaUbicacion(''); setNuevaDescripcion('');
       alert("¡Reporte enviado con éxito! Las autoridades han sido notificadas.");
@@ -132,7 +132,7 @@ export default function PortalPublico({ datosIniciales }: { datosIniciales: any[
       setEnviando(false);
     }
   };
-
+  
   return (
     <>
       <Head><title>Portal de Transparencia | GeoReporte</title></Head>
